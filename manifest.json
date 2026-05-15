@@ -4,5 +4,6 @@
     "optional": [],
     "author": "Antigravity",
     "description": "Converts Janitor AI chat export files (.json) into SillyTavern's chat format (.jsonl).",
+    "js": "index.js",
     "version": "1.0.0"
 }

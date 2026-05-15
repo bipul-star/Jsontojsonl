@@ -17,8 +17,13 @@ async function handleFileUpload(event) {
                 return;
             }
 
+            // Get ST context
+            const context = getContext();
+            const chid = context.this_chid;
+            const characters = context.characters;
+
             // Target the Current Character
-            if (typeof this_chid === 'undefined' || this_chid === undefined) {
+            if (chid === undefined || chid === null || !characters[chid]) {
                 toastr.warning("Please select a character first.");
                 return;
             }
@@ -55,7 +60,7 @@ async function handleFileUpload(event) {
             const blob = new Blob([jsonlOutput], { type: "application/jsonlines" });
             const importFile = new File([blob], 'Janitor_Import.jsonl', { type: 'application/jsonlines' });
             const formData = new FormData();
-            formData.append('avatar_url', characters[this_chid].avatar);
+            formData.append('avatar_url', characters[chid].avatar);
             formData.append('file', importFile);
 
             // Execute the API Call
@@ -70,7 +75,7 @@ async function handleFileUpload(event) {
                 
                 // Refresh the character's chat list
                 if (typeof openCharacterChat === 'function') {
-                    openCharacterChat(this_chid);
+                    openCharacterChat(chid);
                 } else if (typeof getChatList === 'function') {
                     getChatList();
                 }
