@@ -1,0 +1,8 @@
+{
+    "display_name": "Janitor to SillyTavern Chat Converter",
+    "require": ["*"],
+    "optional": [],
+    "author": "Antigravity",
+    "description": "Converts Janitor AI chat export files (.json) into SillyTavern's chat format (.jsonl).",
+    "version": "1.0.0"
+}
