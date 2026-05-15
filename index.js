@@ -19,7 +19,7 @@ async function handleFileUpload(event) {
 
             // Get ST context
             const context = getContext();
-            const chid = context.this_chid;
+            const chid = context.characterId;
             const characters = context.characters;
 
             // Target the Current Character
