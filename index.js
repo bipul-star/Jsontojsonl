@@ -61,7 +61,10 @@ async function handleFileUpload(event) {
             const importFile = new File([blob], 'Janitor_Import.jsonl', { type: 'application/jsonlines' });
             const formData = new FormData();
             formData.append('avatar_url', characters[chid].avatar);
-            formData.append('file', importFile);
+            formData.append('character_name', characters[chid].name);
+            formData.append('user_name', context.name1 || 'User');
+            formData.append('file_type', 'jsonl');
+            formData.append('avatar', importFile);
 
             // Execute the API Call using jQuery $.ajax
             // This is required because SillyTavern's jQuery setup automatically 
