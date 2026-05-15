@@ -63,10 +63,22 @@ async function handleFileUpload(event) {
             formData.append('avatar_url', characters[chid].avatar);
             formData.append('file', importFile);
 
-            // Execute the API Call
-            const response = await fetch('/api/chats/import', {
-                method: 'POST',
-                body: formData
+            // Execute the API Call using jQuery $.ajax
+            // This is required because SillyTavern's jQuery setup automatically 
+            // attaches the CSRF token to $.ajax requests.
+            const response = await new Promise((resolve, reject) => {
+                $.ajax({
+                    url: '/api/chats/import',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,   // Tell jQuery not to process the data
+                    contentType: false,   // Tell jQuery not to set contentType
+                    success: (data) => resolve({ ok: true, data }),
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        console.error('Import API error:', jqXHR.status, errorThrown);
+                        resolve({ ok: false, status: jqXHR.status, error: errorThrown });
+                    }
+                });
             });
 
             // Handle the Response
@@ -80,7 +92,7 @@ async function handleFileUpload(event) {
                     getChatList();
                 }
             } else {
-                throw new Error("API returned an error");
+                throw new Error(`API returned an error (${response.status})`);
             }
 
         } catch (error) {
