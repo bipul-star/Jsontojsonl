@@ -1,7 +1,6 @@
 import { extension_settings, getContext } from "../../../extensions.js";
 
-const extensionName = "Jsontojsonl";
-const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
+
 
 async function handleFileUpload(event) {
     const file = event.target.files[0];
@@ -94,7 +93,26 @@ async function handleFileUpload(event) {
 jQuery(async () => {
     try {
         // Load HTML
-        const extensionHtml = await $.get(`${extensionFolderPath}/index.html`);
+        const extensionHtml = `
+<div class="extension_settings_block" id="jsontojsonl_settings_block">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header">
+            <b>Janitor to SillyTavern Chat Converter</b>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+        <div class="inline-drawer-content" style="display: none;">
+            <p>Easily convert Janitor AI chat export files (.json) into SillyTavern's chat format (.jsonl). Upload your downloaded Janitor AI chat JSON file here to get the SillyTavern compatible version.</p>
+            
+            <div class="flex-container alignitemscenter flex-gap-10 margin-top-10">
+                <label for="jsontojsonl_file_upload" class="menu_button">
+                    <i class="fa-solid fa-file-arrow-up"></i> Upload Janitor JSON
+                </label>
+                <input id="jsontojsonl_file_upload" type="file" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+</div>
+        `;
         $("#extensions_settings").append(extensionHtml);
 
         // Bind event
